@@ -599,10 +599,12 @@ function validarDataHoraAgendamento(DateTime $dataHora, $horaInicio = null, $hor
             return "Horário inválido da clínica.";
         }
 
-        $hIni = (int) $hIniDT->format('H');
-        $hFim = (int) $hFimDT->format('H');
+        // Comparar horários com precisão de minutos (HH:MM) em vez de apenas horas
+        $hIni = $hIniDT->format('H:i');
+        $hFim = $hFimDT->format('H:i');
 
-        if ($hora < $hIni || $hora >= $hFim) {
+        $timeStr = $dataHora->format('H:i');
+        if ($timeStr < $hIni || $timeStr >= $hFim) {
             return "Horário fora do expediente ({$horaInicioNorm} às {$horaFimNorm}).";
         }
     } else {
