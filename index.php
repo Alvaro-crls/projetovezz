@@ -38,6 +38,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <p class="mb-4">Plataforma Inteligente de Gestão de Atendimentos e Filas para Clínicas e Consultórios</p>
 
+    <?php if (!isLoggedIn()): ?>
     <div class="d-flex flex-wrap justify-content-center gap-3">
 
         <a href="login.php" class="btn btn-light btn-lg px-4">
@@ -59,6 +60,7 @@ require_once __DIR__ . '/includes/header.php';
         </a>
 
     </div>
+    <?php endif; ?>
 
 </div>
 
