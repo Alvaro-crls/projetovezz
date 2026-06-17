@@ -232,10 +232,16 @@ if (defined('USE_SUPABASE_API') && USE_SUPABASE_API) {
     $pacientes = $stmt->fetchAll();
 }
 
+// Consumir flash localmente para evitar exibição na caixa verde do header
+$flash = getFlash();
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<h2 class="mb-1"><i class="fa-solid fa-gauge me-2"></i>Painel do Gestor</h2>
+<?php if (!empty($flash) && ($flash['tipo'] ?? '') === 'success' && mb_stripos($flash['mensagem'] ?? '', 'bem-vindo') !== false): ?>
+    <h2 class="mb-1"><i class="fa-solid fa-gauge me-2"></i><?= e($flash['mensagem']) ?></h2>
+<?php else: ?>
+    <h2 class="mb-1"><i class="fa-solid fa-gauge me-2"></i>Painel do Gestor</h2>
+<?php endif; ?>
 <p class="text-muted mb-4"><?= e($clinica['nome'] ?? 'Clínica') ?> — <?= formatarData(date('Y-m-d')) ?></p>
 
 <div class="row mb-4">

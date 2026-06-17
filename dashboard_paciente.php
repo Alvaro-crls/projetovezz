@@ -190,10 +190,16 @@ if (!empty($logMissing)) {
     $historico = $stmt->fetchAll();
 }
 
+// Consumir flash localmente para evitar exibição na caixa verde do header
+$flash = getFlash();
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<h2 class="mb-4"><i class="fa-solid fa-gauge me-2"></i>Dashboard do Paciente</h2>
+<?php if (!empty($flash) && ($flash['tipo'] ?? '') === 'success' && mb_stripos($flash['mensagem'] ?? '', 'bem-vindo') !== false): ?>
+    <h2 class="mb-4"><i class="fa-solid fa-gauge me-2"></i><?= e($flash['mensagem']) ?></h2>
+<?php else: ?>
+    <h2 class="mb-4"><i class="fa-solid fa-gauge me-2"></i>Dashboard do Paciente</h2>
+<?php endif; ?>
 
 <div class="row mb-4">
     <div class="col-md-4 mb-3">
