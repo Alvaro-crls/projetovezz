@@ -31,7 +31,22 @@ $DB_PORT = getenv('DB_PORT') ?: getenv('SUPABASE_PORT') ?: '5432';
 $DB_NAME = getenv('DB_NAME') ?: getenv('SUPABASE_DB') ?: 'postgres';
 $DB_USER = getenv('DB_USER') ?: getenv('SUPABASE_USER') ?: 'postgres';
 $DB_PASS = getenv('DB_PASSWORD') ?: getenv('SUPABASE_PASSWORD') ?: '';
-$BASE_URL = getenv('BASE_URL') ?: '/VEZZ';
+$baseEnv = getenv('BASE_URL');
+// If BASE_URL explicitly set in env (non-empty), use it. Otherwise try to auto-detect
+if ($baseEnv !== false && $baseEnv !== '') {
+    $BASE_URL = $baseEnv;
+} else {
+    // Auto-detect base URL from script location (handles root deployments)
+    $script = $_SERVER['SCRIPT_NAME'] ?? '';
+    $dir = rtrim(dirname($script), "/\\");
+    if ($dir === '' || $dir === '.' || $dir === '/') {
+        $BASE_URL = '';
+    } else {
+        // ensure leading slash, no trailing slash
+        $BASE_URL = '/' . ltrim($dir, '/\\');
+        $BASE_URL = rtrim($BASE_URL, '/');
+    }
+}
 
 define('BASE_URL', $BASE_URL);
 
