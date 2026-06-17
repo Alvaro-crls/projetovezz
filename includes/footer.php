@@ -7,6 +7,11 @@
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Expor BASE_URL para os scripts front-end (evita hardcode de '/VEZZ')
+    window.VEZZ = window.VEZZ || {};
+    window.VEZZ.baseUrl = '<?= BASE_URL ?>';
+</script>
 <script src="<?= BASE_URL ?>/assets/js/script.js"></script>
 </body>
 </html>

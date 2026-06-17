@@ -3,7 +3,8 @@
  */
 
 const VEZZ = {
-    baseUrl: '/VEZZ',
+    // usar base URL injetada pelo servidor se disponível, caso contrário raiz
+    baseUrl: (window.VEZZ && window.VEZZ.baseUrl) ? window.VEZZ.baseUrl : '',
     intervaloAtualizacao: 5000,
     timerFilaGestor: null,
     timerFilaPaciente: null,
