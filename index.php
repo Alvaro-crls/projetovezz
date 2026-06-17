@@ -49,13 +49,13 @@ require_once __DIR__ . '/includes/header.php';
 
         <a href="cadastro.php" class="btn btn-outline-light btn-lg px-4">
 
-            <i class="fa-solid fa-user-plus me-2"></i>Cadastro Paciente
+            <i class="fa-solid fa-user-plus me-2"></i>Cadastrar
 
         </a>
 
         <a href="cadastro_clinica.php" class="btn btn-outline-light btn-lg px-4">
 
-            <i class="fa-solid fa-hospital me-2"></i>Cadastrar Clínica
+            <i class="fa-solid fa-hospital me-2"></i>Cadastrar
 
         </a>
 
