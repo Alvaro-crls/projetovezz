@@ -195,8 +195,8 @@ $flash = getFlash();
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<?php if (!empty($flash) && ($flash['tipo'] ?? '') === 'success' && mb_stripos($flash['mensagem'] ?? '', 'bem-vindo') !== false): ?>
-    <h2 class="mb-4"><i class="fa-solid fa-gauge me-2"></i><?= e($flash['mensagem']) ?></h2>
+<?php if (isLoggedIn()): ?>
+    <h2 class="mb-4"><i class="fa-solid fa-gauge me-2"></i>Bem-vindo(a), <?= e($_SESSION['usuario_nome']) ?></h2>
 <?php else: ?>
     <h2 class="mb-4"><i class="fa-solid fa-gauge me-2"></i>Dashboard do Paciente</h2>
 <?php endif; ?>
