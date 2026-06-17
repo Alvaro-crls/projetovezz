@@ -75,10 +75,10 @@ require_once __DIR__ . '/functions.php';
                         <a class="nav-link" href="<?= BASE_URL ?>/login.php">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>/cadastro.php">Cadastrar</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>/cadastro.php">Cadastrar Paciente</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL ?>/cadastro_clinica.php">Cadastrar</a>
+                        <a class="nav-link" href="<?= BASE_URL ?>/cadastro_clinica.php">Cadastrar Clínica</a>
                     </li>
                 <?php endif; ?>
             </ul>
