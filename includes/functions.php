@@ -8,8 +8,8 @@ require_once __DIR__ . '/config.php';
 if (defined('USE_SUPABASE_API') && USE_SUPABASE_API) {
     require_once __DIR__ . '/supabase_api.php';
 }
-/** Minutos estimados por posição na fila */
-define('MINUTOS_POR_POSICAO', 10);
+/** Minutos estimados por posição na fila (usar 30 para corresponder ao intervalo de agendamentos) */
+define('MINUTOS_POR_POSICAO', 30);
 
 /** Horário de funcionamento padrão das clínicas */
 define('HORA_INICIO', 8);
