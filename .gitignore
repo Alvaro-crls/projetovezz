@@ -31,3 +31,4 @@ id_*
 coverage/
 composer.lock
 debug_backtrace.log
+.
