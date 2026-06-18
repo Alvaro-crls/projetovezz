@@ -882,8 +882,9 @@ function obterDadosFilaPaciente($pdo, $idPaciente)
 {
     if (defined('USE_SUPABASE_API') && USE_SUPABASE_API) {
         $today = date('Y-m-d');
+        // buscar próxima/atual consulta do paciente hoje — não incluir finalizadas
         $path = 'tb_consulta?select=*,tb_clinica(nome)&id_paciente=eq.' . rawurlencode($idPaciente) . '&' . supabase_day_range_query($today)
-            . '&status=in.(Agendada,Em%20Atendimento,Finalizada)&order=data_hora.desc&limit=1';
+            . '&status=in.(Agendada,Em%20Atendimento)&order=data_hora.asc&limit=1';
         $res = supabase_request('GET', $path);
         $consulta = ($res['status'] >= 200 && is_array($res['body']) && count($res['body']) > 0) ? $res['body'][0] : null;
 
@@ -929,7 +930,7 @@ function obterDadosFilaPaciente($pdo, $idPaciente)
         ];
     }
 
-    $stmt = $pdo->prepare("\n        SELECT c.*, cl.nome AS nome_clinica\n        FROM tb_consulta c\n        INNER JOIN tb_clinica cl ON cl.id_clinica = c.id_clinica\n                WHERE c.id_paciente = ?\n                    AND DATE(c.data_hora) = CURRENT_DATE\n          AND c.status IN ('Agendada', 'Em Atendimento', 'Finalizada')\n        ORDER BY c.data_hora DESC\n        LIMIT 1\n    ");
+    $stmt = $pdo->prepare("\n        SELECT c.*, cl.nome AS nome_clinica\n        FROM tb_consulta c\n        INNER JOIN tb_clinica cl ON cl.id_clinica = c.id_clinica\n                WHERE c.id_paciente = ?\n                    AND DATE(c.data_hora) = CURRENT_DATE\n          AND c.status IN ('Agendada', 'Em Atendimento')\n        ORDER BY c.data_hora ASC\n        LIMIT 1\n    ");
     $stmt->execute([$idPaciente]);
     $consulta = $stmt->fetch();
 

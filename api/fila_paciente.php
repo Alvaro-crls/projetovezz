@@ -20,10 +20,10 @@ try {
     $start = $today . 'T00:00:00';
     $tomorrow = date('Y-m-d', strtotime($today . ' +1 day')) . 'T00:00:00';
 
-    // buscar última consulta do paciente hoje
+    // buscar próxima/atual consulta do paciente hoje (não incluir finalizadas)
     $path = "tb_consulta?select=id_consulta,data_hora,status,id_clinica&id_paciente=eq.$idPaciente";
     $path .= "&data_hora=gte.$start&data_hora=lt.$tomorrow";
-    $path .= "&status=in.(Agendada,Em%20Atendimento,Finalizada)&order=data_hora.desc&limit=1";
+    $path .= "&status=in.(Agendada,Em%20Atendimento)&order=data_hora.asc&limit=1";
 
     $res = supabase_request('GET', $path);
     if ($res['status'] < 200 || $res['status'] >= 300) {
