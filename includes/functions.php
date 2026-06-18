@@ -756,7 +756,7 @@ function pesquisarClinicas($pdo, $nome = '', $cidade = '')
             $query[] = 'nome=ilike.%25' . rawurlencode($nome) . '%25';
         }
         if ($cidade !== '') {
-            $query[] = 'tb_endereco!inner(cidade=ilike.%25' . rawurlencode($cidade) . '%25)';
+            $query[] = 'tb_endereco.cidade=ilike.%25' . rawurlencode($cidade) . '%25';
         }
         $path = 'tb_clinica?select=id_clinica,nome,telefone,descricao,tb_endereco(rua,numero,bairro,cidade,cep)';
         if (!empty($query)) $path .= '&' . implode('&', $query);
@@ -787,12 +787,12 @@ function pesquisarClinicas($pdo, $nome = '', $cidade = '')
     $params = [];
 
     if ($nome !== '') {
-        $sql .= " AND c.nome ILIKE ?";
+        $sql .= " AND c.nome LIKE ?";
         $params[] = '%' . $nome . '%';
     }
 
     if ($cidade !== '') {
-        $sql .= " AND e.cidade ILIKE ?";
+        $sql .= " AND e.cidade LIKE ?";
         $params[] = '%' . $cidade . '%';
     }
 
