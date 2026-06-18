@@ -44,6 +44,10 @@ try {
         'data_hora' => date('d/m/Y H:i', strtotime($consulta['data_hora'])),
         'status' => $consulta['status'],
         'id_consulta' => $consulta['id_consulta'],
+        // valores padrão para evitar undefined no frontend
+        'posicao' => '-',
+        'tempo_estimado' => '-',
+        'pacientes_a_frente' => 0,
     ];
 
     // buscar nome da clinica

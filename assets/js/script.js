@@ -153,7 +153,7 @@ function atualizarPosicaoPaciente() {
                     <div class="col-md-4">
                         <div class="stat-card card card-custom h-100">
                             <div class="card-body">
-                                <div class="queue-position">${data.posicao || '-'}</div>
+                                <div class="queue-position">${escapeHtml(data.posicao ?? '-')}</div>
                                 <div class="stat-label">Sua Posição</div>
                             </div>
                         </div>
@@ -161,7 +161,7 @@ function atualizarPosicaoPaciente() {
                     <div class="col-md-4">
                         <div class="stat-card card card-custom h-100">
                             <div class="card-body">
-                                <div class="stat-number">${data.pacientes_a_frente}</div>
+                                <div class="stat-number">${escapeHtml(data.pacientes_a_frente ?? '-')}</div>
                                 <div class="stat-label">Pacientes à Frente</div>
                             </div>
                         </div>
