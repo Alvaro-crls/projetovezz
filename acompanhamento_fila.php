@@ -8,6 +8,13 @@ checkAuth('paciente');
 
 $dados = obterDadosFilaPaciente($pdo, (int) $_SESSION['usuario_id']);
 
+// Não exibir, no carregamento inicial, consultas já finalizadas —
+// o polling em JS consulta `/api/fila_paciente.php` que retorna apenas Agendada/Em Atendimento.
+if (!empty($dados['tem_consulta']) && in_array($dados['status'] ?? '', ['Finalizado', 'Finalizada'], true)) {
+    $dados['tem_consulta'] = false;
+    $dados['mensagem'] = 'Você não possui consulta agendada para hoje.';
+}
+
 require_once __DIR__ . '/includes/header.php';
 ?>
 
