@@ -53,6 +53,7 @@ function vezzAjax(url, options = {}) {
 }
 
 function atualizarDashboardFilaPaciente() {
+    console.debug('[vezz] atualizarDashboardFilaPaciente called', new Date().toISOString());
     const container = document.getElementById('dashboard-fila-paciente');
     if (!container || !document.getElementById('dash-posicao')) return;
 
@@ -74,11 +75,14 @@ function atualizarDashboardFilaPaciente() {
 function iniciarPollingDashboardPaciente() {
     if (document.getElementById('dashboard-fila-paciente')) {
         atualizarDashboardFilaPaciente();
-        setInterval(atualizarDashboardFilaPaciente, VEZZ.intervaloAtualizacao);
+        if (VEZZ.timerDashboard) clearInterval(VEZZ.timerDashboard);
+        VEZZ.timerDashboard = setInterval(atualizarDashboardFilaPaciente, VEZZ.intervaloAtualizacao);
+        console.debug('[vezz] iniciarPollingDashboardPaciente started, interval=', VEZZ.intervaloAtualizacao);
     }
 }
 
 function atualizarFilaGestor() {
+    console.debug('[vezz] atualizarFilaGestor called', new Date().toISOString());
     const containerAguardando = document.getElementById('fila-aguardando');
     const containerAtual = document.getElementById('fila-atendimento-atual');
     const totalAguardando = document.getElementById('total-aguardando');
@@ -141,6 +145,7 @@ function atualizarFilaGestor() {
 }
 
 function atualizarPosicaoPaciente() {
+    console.debug('[vezz] atualizarPosicaoPaciente called', new Date().toISOString());
     const container = document.getElementById('fila-paciente-dados');
     if (!container) return;
 
@@ -245,14 +250,18 @@ function carregarHorariosDisponiveis() {
 function iniciarPollingFilaGestor() {
     if (document.getElementById('fila-aguardando')) {
         atualizarFilaGestor();
+        if (VEZZ.timerFilaGestor) clearInterval(VEZZ.timerFilaGestor);
         VEZZ.timerFilaGestor = setInterval(atualizarFilaGestor, VEZZ.intervaloAtualizacao);
+        console.debug('[vezz] iniciarPollingFilaGestor started, interval=', VEZZ.intervaloAtualizacao);
     }
 }
 
 function iniciarPollingFilaPaciente() {
     if (document.getElementById('fila-paciente-dados')) {
         atualizarPosicaoPaciente();
+        if (VEZZ.timerFilaPaciente) clearInterval(VEZZ.timerFilaPaciente);
         VEZZ.timerFilaPaciente = setInterval(atualizarPosicaoPaciente, VEZZ.intervaloAtualizacao);
+        console.debug('[vezz] iniciarPollingFilaPaciente started, interval=', VEZZ.intervaloAtualizacao);
     }
 }
 
