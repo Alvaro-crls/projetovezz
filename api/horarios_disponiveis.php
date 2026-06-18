@@ -34,6 +34,7 @@ $data = trim($_GET['data'] ?? '');
 $idConsulta = (int) ($_GET['id_consulta'] ?? 0);
 
 if ($idClinica <= 0 || $data === '') {
+    http_response_code(400);
     echo json_encode(['erro' => 'Parâmetros inválidos']);
     exit;
 }
@@ -67,6 +68,7 @@ try {
     // validar dia da semana
     $dataConsulta = DateTime::createFromFormat('Y-m-d', $data);
     if (!$dataConsulta) {
+        http_response_code(400);
         echo json_encode(['erro' => 'Data inválida']);
         exit;
     }
@@ -124,5 +126,6 @@ try {
     echo json_encode($disponiveis);
 } catch (Exception $e) {
     error_log('[horarios_disponiveis] ' . $e->getMessage());
-    echo json_encode(['erro' => 'Erro interno ao carregar horários']);
+    http_response_code(500);
+    echo json_encode(['erro' => 'Erro interno ao carregar horários', 'detalhe' => $e->getMessage()]);
 }

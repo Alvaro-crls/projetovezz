@@ -31,11 +31,24 @@ function vezzAjax(url, options = {}) {
         },
         credentials: 'same-origin',
         ...options,
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error('Erro na requisição');
+    }).then(async response => {
+        const contentType = response.headers.get('Content-Type') || '';
+        let body = null;
+        if (contentType.indexOf('application/json') !== -1) {
+            try { body = await response.json(); } catch (e) { body = null; }
+        } else {
+            try { body = await response.text(); } catch (e) { body = null; }
         }
-        return response.json();
+
+        if (!response.ok) {
+            const msg = (body && body.erro) ? body.erro : ('HTTP ' + response.status + ' - Erro na requisição');
+            const err = new Error(msg);
+            err.status = response.status;
+            err.body = body;
+            throw err;
+        }
+
+        return body;
     });
 }
 
@@ -222,8 +235,10 @@ function carregarHorariosDisponiveis() {
                 selectHorario.disabled = false;
             }
         })
-        .catch(() => {
-            selectHorario.innerHTML = '<option value="">Erro ao carregar horários</option>';
+        .catch(err => {
+            console.error('Erro ao carregar horários:', err);
+            const msg = (err && err.message) ? err.message : 'Erro ao carregar horários';
+            selectHorario.innerHTML = `<option value="">${escapeHtml(msg)}</option>`;
         });
 }
 
