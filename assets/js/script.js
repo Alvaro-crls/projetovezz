@@ -8,6 +8,7 @@ const VEZZ = {
     intervaloAtualizacao: 5000,
     timerFilaGestor: null,
     timerFilaPaciente: null,
+    timerDashboard: null,
 };
 
 function badgeStatusClass(status) {
@@ -311,6 +312,8 @@ function mascaraCNPJ(input) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    try {
+        console.debug('[vezz] DOMContentLoaded');
     iniciarPollingFilaGestor();
     iniciarPollingFilaPaciente();
     iniciarPollingDashboardPaciente();
@@ -338,4 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('[data-mask="cnpj"]').forEach(el => {
         el.addEventListener('input', () => mascaraCNPJ(el));
     });
+    } catch (e) {
+        console.error('[vezz] erro em DOMContentLoaded', e);
+    }
 });
