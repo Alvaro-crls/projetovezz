@@ -94,14 +94,14 @@ $clinicas = pesquisarClinicas($pdo, $nome, $cidade);
                         $rua = trim((string)($clinica['rua'] ?? ''));
                         $numero = trim((string)($clinica['numero'] ?? ''));
                         $bairro = trim((string)($clinica['bairro'] ?? ''));
-                        $cidade = trim((string)($clinica['cidade'] ?? ''));
-                        if ($rua === '' && $numero === '' && $bairro === '' && $cidade === '') {
+                        $clinica_cidade = trim((string)($clinica['cidade'] ?? ''));
+                        if ($rua === '' && $numero === '' && $bairro === '' && $clinica_cidade === '') {
                             echo 'Endereço não cadastrado';
                         } else {
                             $parts = [];
                             if ($rua !== '') $parts[] = $rua . ($numero !== '' ? ', ' . $numero : '');
                             if ($bairro !== '') $parts[] = $bairro;
-                            if ($cidade !== '') $parts[] = $cidade;
+                            if ($clinica_cidade !== '') $parts[] = $clinica_cidade;
                             echo e(implode(' - ', $parts));
                         }
                         ?>
